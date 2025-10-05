@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "f81ccc66-10a8-4ce9-84d5-716ab3c98acd",
+		"name": "Pet collection",
+		"description": "Simple echo tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "First",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f82ff4ed-3337-4cd1-bdf2-3353ca41da8f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b5e02aff-cf36-4178-8f64-bb51809f759a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"foo1 test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.args.foo1).to.eql(\"bar1\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"key2 test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.args.testkey2).to.eql(\"value2\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present test\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"var test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.args.var).to.eql(pm.environment.get(\"test_variable\"));\r",
+							";\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "646d8c9f-184f-4a99-8fb8-ced4a3571903",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://postman-echo.com/get?foo1=bar1&testkey2=value2&var={{test_variable}}",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"get"
+					],
+					"query": [
+						{
+							"key": "foo1",
+							"value": "bar1"
+						},
+						{
+							"key": "testkey2",
+							"value": "value2"
+						},
+						{
+							"key": "var",
+							"value": "{{test_variable}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Second",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4fb554d6-687a-4587-bb0c-61291a327ba2",
+						"exec": [
+							"pm.environment.set(\"localcharger\", pm.environment.get(\"charger\") * 10);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c1e4d44a-4b7f-4c68-acaf-169382d4720e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"correct set localcharger\", function () {\r",
+							"   pm.expect(pm.environment.get(\"localcharger\")).to.eql(pm.environment.get(\"charger\") * 10);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"local charger test\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.args.localcharger).to.eql(String(pm.environment.get(\"charger\") * 10));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "98204042-00d2-4ad9-9fa6-bcd3be159811",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://postman-echo.com/post?localcharger={{localcharger}}&price={{$randomPrice}}",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"post"
+					],
+					"query": [
+						{
+							"key": "localcharger",
+							"value": "{{localcharger}}"
+						},
+						{
+							"key": "price",
+							"value": "{{$randomPrice}}",
+							"type": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
